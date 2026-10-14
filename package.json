@@ -1,0 +1,11 @@
+{
+  "name": "maybe-sun-tzu",
+  "private": true,
+  "type": "module",
+  "description": "Did Sun Tzu actually say it? Checks a phrase against the Giles translation of The Art of War.",
+  "scripts": {
+    "build:data": "node scripts/build-passages.mjs",
+    "test": "node --test \"test/*.test.mjs\"",
+    "start": "python3 -m http.server 8000"
+  }
+}
