@@ -30,27 +30,35 @@
     <div class="paper">
       <div class="vertical-title" aria-hidden="true">孫子兵法</div>
 
-      <header class="masthead">
-        <figure class="portrait">
-          <img src="assets/sun-tzu.jpg" width="400" height="520"
-               alt="Traditional Chinese painting of Sun Tzu standing in long robes">
-        </figure>
-        <div class="titles">
-          <h1>Did Sun Tzu<br>Say That?</h1>
-          <p class="subtitle">Checked against <cite>The Art of War</cite>,<br>tr. Lionel Giles, 1910</p>
+      <div class="left">
+        <header class="masthead">
+          <figure class="portrait">
+            <img src="assets/sun-tzu.jpg" width="400" height="520"
+                 alt="Traditional Chinese painting of Sun Tzu in long robes">
+          </figure>
+          <div class="titles">
+            <h1>Did Sun Tzu <br>Say That?</h1>
+            <p class="subtitle"><span class="wide-only">Checked against </span><cite>The Art of War</cite>, <br>tr. Lionel Giles, 1910</p>
+          </div>
+        </header>
+
+        <form id="ask" class="ask" autocomplete="off">
+          <label for="phrase" class="sr-only">A phrase to check</label>
+          <textarea id="phrase" name="q" rows="2" maxlength="500" required
+                    placeholder="Paste a “Sun Tzu” quote…"></textarea>
+          <div class="ask-row">
+            <button type="submit" id="go">Consult the scroll</button>
+            <button type="button" id="random" class="linkish">or try a famous one</button>
+          </div>
+        </form>
+      </div>
+
+      <section id="result" class="result" aria-live="polite">
+        <div class="placeholder" id="placeholder">
+          <div class="seal ghost" aria-hidden="true"><span>問</span><span>之</span></div>
+          <p>Paste a quote that “Sun Tzu said”.<br>The scroll will judge it.</p>
         </div>
-      </header>
-
-      <form id="ask" class="ask" autocomplete="off">
-        <label for="phrase" class="sr-only">A phrase to check</label>
-        <textarea id="phrase" name="q" rows="2" maxlength="500" required
-                  placeholder="Paste a “Sun Tzu” quote…"></textarea>
-        <button type="submit" id="go">Consult the scroll</button>
-        <button type="button" id="random" class="linkish">or try a famous one</button>
-      </form>
-
-      <section id="result" class="result" aria-live="polite" hidden>
-        <article id="card" class="card">
+        <article id="card" class="card" hidden>
           <div class="seal" id="seal" aria-hidden="true"><span></span><span></span></div>
           <p class="verdict" id="verdict"></p>
           <blockquote class="asked" id="asked"></blockquote>
@@ -61,7 +69,7 @@
           </blockquote>
           <p class="watermark" id="watermark"></p>
         </article>
-        <div class="actions">
+        <div class="actions" id="actions" hidden>
           <button type="button" id="copy">Copy link</button>
           <span id="copied" class="copied" role="status"></span>
         </div>
@@ -71,21 +79,12 @@
   </main>
 
   <footer class="credits">
-    <p>
-      Text: <cite>The Art of War</cite> by Sun Tzu, translated by Lionel Giles (1910),
-      <a href="https://www.gutenberg.org/ebooks/132">Project Gutenberg eBook #132</a>.
-      Only Sun Tzu’s verses are searched, not Giles’s notes.
-    </p>
-    <p>
-      Portrait: <em>Sun Wu (孫武子)</em>, from the <em>Album of Full-length Portraits of Sage Rulers
-      and Worthy Ministers</em>, National Palace Museum, Taipei. Public domain, via
-      <a href="https://commons.wikimedia.org/wiki/File:Sun_Wu_(a_general_of_the_State_of_Wu).png">Wikimedia Commons</a>.
-      It is a painting from many centuries after his time. Nobody knows what he looked like.
-    </p>
-    <p>
-      Everything runs in your browser.
-      <a href="https://github.com/guilherme01macedo/maybe-sun-tzu">Source on GitHub</a>.
-    </p>
+    Text: <cite>The Art of War</cite>, tr. Lionel Giles (1910),
+    <a href="https://www.gutenberg.org/ebooks/132">Project Gutenberg</a>.
+    Portrait: <em>Sun Wu</em> (孫武子), National Palace Museum, public domain,
+    <a href="https://commons.wikimedia.org/wiki/File:Sun_Wu_(a_general_of_the_State_of_Wu).png">Wikimedia Commons</a>.
+    <span class="wide-only">Painted centuries later. Nobody knows what he looked like.</span>
+    <a href="https://github.com/guilherme01macedo/maybe-sun-tzu">Source</a>
   </footer>
 
   <script type="module" src="app.js"></script>

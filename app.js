@@ -96,13 +96,37 @@ function render(result) {
   $("cite").innerHTML = `— <cite>The Art of War</cite>, ch. ${p.chapterRoman}, <span class="chapter-title">${escapeHtml(p.chapterTitle)}</span>, ${verse}`;
   $("watermark").textContent = (location.host + location.pathname).replace(/index\.html$/, "").replace(/\/$/, "");
 
-  const section = $("result");
-  section.hidden = false;
+  $("placeholder").hidden = true;
+  card.hidden = false;
+  $("actions").hidden = false;
+  fit();
   // Restart the stamp animation.
   card.classList.remove("stamped");
   void card.offsetWidth;
   card.classList.add("stamped");
 }
+
+// Makes the card text smaller until the page fits in the window without a
+// scroll bar. Long verses need this, mostly on phones. 11px is the limit.
+function fit() {
+  const card = $("card");
+  if (card.hidden) return;
+  card.style.removeProperty("--card-size");
+  let size = parseFloat(getComputedStyle(card).fontSize);
+  const page = document.documentElement;
+  while (page.scrollHeight > window.innerHeight && size > 11) {
+    size -= 0.5;
+    card.style.setProperty("--card-size", `${size}px`);
+  }
+}
+
+let resizeTimer;
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(fit, 100);
+});
+// The web fonts change the text size when they load.
+document.fonts?.ready.then(fit);
 
 async function check(phrase, { scroll = true } = {}) {
   phrase = phrase.trim();
@@ -110,8 +134,8 @@ async function check(phrase, { scroll = true } = {}) {
   try {
     await ready;
   } catch (err) {
-    $("result").hidden = false;
-    $("verdict").textContent = err.message;
+    $("placeholder").hidden = false;
+    $("placeholder").querySelector("p").textContent = err.message;
     return;
   }
   const result = matcher.match(phrase);
@@ -119,7 +143,7 @@ async function check(phrase, { scroll = true } = {}) {
   render(result);
   history.replaceState(null, "", shareUrl(phrase));
   $("copied").textContent = "";
-  if (scroll) $("result").scrollIntoView({ behavior: "smooth", block: "nearest" });
+  if (scroll) $("card").scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
 form.addEventListener("submit", (e) => {
